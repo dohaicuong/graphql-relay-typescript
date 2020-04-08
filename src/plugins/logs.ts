@@ -1,35 +1,43 @@
 import { ApolloServerPlugin } from 'apollo-server-plugin-base'
 import { Logger } from 'winston'
+import { typeFromAST } from 'graphql'
 
 const createPlugin = (logger: Logger): ApolloServerPlugin => {
   return {
-    requestDidStart: ({ request }) => {
+    requestDidStart: ({ request, context }) => {
       if (request.operationName !== 'IntrospectionQuery') {
-        const operationName = request.operationName || ''
-        logger.info(operationName, request.query)
+        const operationName = request.operationName || request.query || ''
+        logger.info({
+          operation: operationName,
+          info: request.query
+        })
 
         return {
-          parsingDidStart: ({ request }) => {
-            logger.info(`${request.operationName} - parsing start`)
-          },
-          validationDidStart: ({ request }) => {
-            logger.info(`${request.operationName} - validation start`)
-          },
-          didResolveOperation: ({ request }) => {
-            logger.info(`${request.operationName} - resolve operation`)
-          },
-          responseForOperation: ({ request }) => {
-            logger.info(`${request.operationName} - response operation`)
-            return null
-          },
-          executionDidStart: ({ operationName }) => {
-            logger.info(`${request.operationName} - execute`)
-          },
-          didEncounterErrors: ({ operationName, errors }) => {
-            logger.error(`${operationName} - ${JSON.stringify(errors)}`)
+          // parsingDidStart: ({ request }) => {
+          //   logger.info(`${request.operationName} - parsing start`)
+          // },
+          // validationDidStart: ({ request }) => {
+          //   logger.info(`${request.operationName} - validation start`)
+          // },
+          // didResolveOperation: ({ request }) => {
+          //   logger.info(`${request.operationName} - resolve operation`)
+          // },
+          // responseForOperation: ({ request }) => {
+          //   logger.info(`${request.operationName} - response operation`)
+          //   return null
+          // },
+          // executionDidStart: ({ operationName }) => {
+          //   logger.info(`${request.operationName} - execute`)
+          // },
+          didEncounterErrors: ({ errors }) => {
+            logger.error({
+              operation: operationName, info: errors
+            })
           },
           willSendResponse: ({ response }) => {
-            logger.info(`${operationName} - ${JSON.stringify(response)}`)
+            logger.info({
+              operation: operationName, info: response
+            })
           },
         }
       }

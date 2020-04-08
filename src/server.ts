@@ -4,14 +4,20 @@ import schema from './modules'
 
 import createLogPlugin from './plugins/logs'
 import winston, { format } from 'winston'
-const { combine, timestamp, label, printf, colorize } = format
+import { SERVICE_NAME } from './configs'
 const logger = winston.createLogger({
-  level: 'info',
-  format: combine(
-    colorize(),
-    label({ label: 'graphql-service' }),
-    timestamp(),
-    printf(({ level, label, message, timestamp }) => `${timestamp} [${label}] ${level}: ${message}`)
+  level: 'error',
+  format: format.combine(
+    format.colorize(),
+    format.prettyPrint(),
+    format.splat(),
+    format.simple(),
+    format.label({ label: SERVICE_NAME }),
+    format.timestamp(),
+    format.printf(({ timestamp, label, level, message }) => {
+      // @ts-ignore
+      return `${timestamp} [${label}] ${level}: ${message.operation} - ${JSON.stringify(message.info, null, 4)}`
+    })
   ),
   transports: [
     // new winston.transports.File({ filename: 'combined.log' })
