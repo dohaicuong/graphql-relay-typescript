@@ -1,0 +1,11 @@
+overwrite: true
+# schema: http://localhost:4000
+schema: src/modules/typeDefs.ts
+documents: null
+generates:
+  src/gen-types.ts:
+    config:
+      contextType: ./server#Context
+    plugins:
+      - typescript
+      - typescript-resolvers
