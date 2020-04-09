@@ -1,16 +1,18 @@
 import {
   QueryResolvers,
-  PostResolvers
-} from '../gen-types'
+  PostResolvers,
+  CommentResolvers
+} from 'gen-types'
 
 type Resolvers = {
   Query: QueryResolvers
   Post?: PostResolvers
+  Comment?: CommentResolvers
 }
 
 const resolvers: Resolvers = {
   Query: {
-    post: () => {
+    post: (_, __, { prisma, logger }) => {
       return {
         id: '1',
         title: 'dkm',
@@ -20,8 +22,6 @@ const resolvers: Resolvers = {
   },
   Post: {
     comments: () => {
-      throw new Error('dkm')
-
       return [
         { id: '1', content: 'yeah 1' },
         { id: '2', content: 'yeah 2' },
