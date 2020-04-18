@@ -39,6 +39,8 @@ jobs:
         git add .
         git commit -m "update test coverage"
         git push
+    - name: Grab verion from package.json
+      run: export VERSION=cat package.json | grep version | cut -d':' -f 2 | cut -d'"' -f 2
 
   build_and_publish:
     runs-on: ubuntu-latest
@@ -51,7 +53,7 @@ jobs:
         name: Build & push Docker image
         with:
           image: dohaicuong/graphql-relay-ts
-          tag: ${{ steps.check.outputs.version }}
+          tag: ${{ VERSION }}
           registry: docker.io
           dockerfile: Dockerfile
           username: ${{ secrets.REGISTRY_USERNAME }}
