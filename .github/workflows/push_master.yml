@@ -29,7 +29,7 @@ jobs:
     - name: If version unchanged, exit
       if: steps.check.outputs.changed != 'true'
       run: |
-        echo "No version change :/"
+        echo "No version change!"
         exit 1
     - name: Continue on version changed
       if: steps.check.outputs.changed == 'true'
