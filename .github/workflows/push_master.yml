@@ -40,11 +40,11 @@ jobs:
         git commit -m "update test coverage"
         git push
     - uses: mr-smithers-excellent/docker-build-push@v3
-        name: Build & push Docker image
-        with:
-          image: dohaicuong/graphql-relay-ts
-          tag: ${{ steps.check.outputs.version }}
-          registry: docker.io
-          dockerfile: Dockerfile
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+      name: Build & push Docker image
+      with:
+        image: dohaicuong/graphql-relay-ts
+        tag: ${{ steps.check.outputs.version }}
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
