@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1587195570282" clover="3.2.0">
-  <project timestamp="1587195570283" name="All files">
+<coverage generated="1587230111171" clover="3.2.0">
+  <project timestamp="1587230111172" name="All files">
     <metrics statements="46" coveredstatements="35" conditionals="12" coveredconditionals="9" methods="10" coveredmethods="5" elements="68" coveredelements="49" complexity="0" loc="46" ncloc="46" packages="3" files="6" classes="6"/>
     <package name="src">
       <metrics statements="16" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="1"/>
-      <file name="configs.ts" path="/home/yuki/Desktop/projects/github/graphql-relay-typescript/src/configs.ts">
+      <file name="configs.ts" path="/home/runner/work/graphql-relay-typescript/graphql-relay-typescript/src/configs.ts">
         <metrics statements="2" coveredstatements="2" conditionals="4" coveredconditionals="4" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="2" count="1" type="cond" truecount="2" falsecount="0"/>
       </file>
-      <file name="server.ts" path="/home/yuki/Desktop/projects/github/graphql-relay-typescript/src/server.ts">
+      <file name="server.ts" path="/home/runner/work/graphql-relay-typescript/graphql-relay-typescript/src/server.ts">
         <metrics statements="14" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -29,14 +29,14 @@
     </package>
     <package name="src.modules">
       <metrics statements="18" coveredstatements="11" conditionals="3" coveredconditionals="2" methods="4" coveredmethods="1"/>
-      <file name="index.ts" path="/home/yuki/Desktop/projects/github/graphql-relay-typescript/src/modules/index.ts">
+      <file name="index.ts" path="/home/runner/work/graphql-relay-typescript/graphql-relay-typescript/src/modules/index.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
       </file>
-      <file name="resolvers.ts" path="/home/yuki/Desktop/projects/github/graphql-relay-typescript/src/modules/resolvers.ts">
+      <file name="resolvers.ts" path="/home/runner/work/graphql-relay-typescript/graphql-relay-typescript/src/modules/resolvers.ts">
         <metrics statements="12" coveredstatements="5" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
@@ -51,7 +51,7 @@
         <line num="37" count="0" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
       </file>
-      <file name="typeDefs.ts" path="/home/yuki/Desktop/projects/github/graphql-relay-typescript/src/modules/typeDefs.ts">
+      <file name="typeDefs.ts" path="/home/runner/work/graphql-relay-typescript/graphql-relay-typescript/src/modules/typeDefs.ts">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="cond" truecount="2" falsecount="0"/>
@@ -59,7 +59,7 @@
     </package>
     <package name="src.plugins">
       <metrics statements="12" coveredstatements="10" conditionals="5" coveredconditionals="3" methods="4" coveredmethods="3"/>
-      <file name="logs.ts" path="/home/yuki/Desktop/projects/github/graphql-relay-typescript/src/plugins/logs.ts">
+      <file name="logs.ts" path="/home/runner/work/graphql-relay-typescript/graphql-relay-typescript/src/plugins/logs.ts">
         <metrics statements="12" coveredstatements="10" conditionals="5" coveredconditionals="3" methods="4" coveredmethods="3"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
