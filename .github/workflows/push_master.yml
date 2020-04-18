@@ -19,13 +19,18 @@ jobs:
     - name: Check if version has been updated
       id: check
       uses: EndBug/version-check@v1
-    - name: If version unchanged, treat as patch
+    # - name: If version unchanged, treat as patch
+    #   if: steps.check.outputs.changed != 'true'
+    #   run: |
+    #     echo "No version change :/"
+    #     echo "Default pump version as patch"
+    #     npm version patch -m "Upgrade to %s"
+    #     git push && git push --tags
+    -name: If version unchanged, exit
       if: steps.check.outputs.changed != 'true'
       run: |
         echo "No version change :/"
-        echo "Default pump version as patch"
-        npm version patch -m "Upgrade to %s"
-        git push && git push --tags
+        exit 1
     - name: Continue on version changed
       if: steps.check.outputs.changed == 'true'
       run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
