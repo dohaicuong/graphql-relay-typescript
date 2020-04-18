@@ -12,6 +12,10 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-verions: '12.16.x'
+    - name: Setup git config
+      run: |
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
     - name: Check if version has been updated
       id: check
       uses: EndBug/version-check@v1
@@ -19,8 +23,6 @@ jobs:
       if: steps.check.outputs.changed != 'true'
       run: |
         echo "No version change :/"
-        git config user.name "$GITHUB_ACTOR"
-        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
         echo "Default pump version as patch"
         npm version patch -m "Upgrade to %s"
         git push && git push --tags
@@ -32,7 +34,11 @@ jobs:
         yarn
         yarn gen
     - name: Test
-      run: yarn test
+      run: |
+        yarn test
+        git add .
+        git commit -m "update test coverage"
+        git push
 
   build_and_publish:
     runs-on: ubuntu-latest
