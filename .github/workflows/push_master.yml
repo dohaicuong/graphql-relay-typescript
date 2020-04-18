@@ -53,7 +53,7 @@ jobs:
         name: Build & push Docker image
         with:
           image: dohaicuong/graphql-relay-ts
-          tag: $VERSION
+          tag: ${{ $VERSION }}
           registry: docker.io
           dockerfile: Dockerfile
           username: ${{ secrets.REGISTRY_USERNAME }}
