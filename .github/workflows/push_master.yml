@@ -5,7 +5,7 @@ on:
       - ci
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -15,16 +15,22 @@ jobs:
     - name: Check if version has been updated
       id: check
       uses: EndBug/version-check@v1
-
     - name: Exit on version unchanged
       if: steps.check.outputs.changed != 'true'
       run: |
         echo "No version change :/"
         exit 1
-
     - name: Continue on version changed
       if: steps.check.outputs.changed == 'true'
       run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+    - name: Install dependencies
+      run: |
+        yarn
+        yarn gen
+    - name: Test
+      run: yarn test
+
+  build_and_publish:
     - uses: mr-smithers-excellent/docker-build-push@v3
       name: Build & push Docker image
       with:
