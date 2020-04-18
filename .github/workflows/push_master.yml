@@ -5,8 +5,14 @@ on:
       - ci
 
 jobs:
+  setup:
+    steps:
+    - name: setup git config
+      run: |
+        git config --global user.name ${GITHUB_ACTOR}
+        git config --global user.email ${GITHUB_ACTOR}@gmail.com
+
   test:
-    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -32,7 +38,6 @@ jobs:
       run: yarn test
 
   build_and_publish:
-    runs-on: ubuntu-latest
     steps:
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & push Docker image
