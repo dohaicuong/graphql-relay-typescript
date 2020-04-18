@@ -1,32 +1,32 @@
 import {
   QueryResolvers,
-  PostResolvers
-} from '../gen-types'
+  MutationResolvers,
+  PostResolvers,
+  CommentResolvers
+} from 'gen-types'
 
 type Resolvers = {
   Query: QueryResolvers
+  Mutation?: MutationResolvers
   Post?: PostResolvers
+  Comment?: CommentResolvers
 }
 
 const resolvers: Resolvers = {
   Query: {
-    post: () => {
-      return {
-        id: '1',
-        title: 'dkm',
-        content: 'yeah'
-      }
+    post: (_, { id }, { prisma, logger }) => {
+      return prisma.post.findOne({ where: { id }})
+    }
+  },
+  Mutation: {
+    postCreate: async (_, { input }, { prisma }) => {
+      const post = await prisma.post.create({ data: input })
+      return { post }
     }
   },
   Post: {
-    comments: () => {
-      throw new Error('dkm')
-
-      return [
-        { id: '1', content: 'yeah 1' },
-        { id: '2', content: 'yeah 2' },
-        { id: '3', content: 'yeah 3' },
-      ]
+    comments: (post, __, { prisma }) => {
+      return prisma.post.findOne({ where: { id: post.id }}).comments()
     }
   }
 }

@@ -2,6 +2,9 @@ import { ApolloServer } from 'apollo-server'
 
 import schema from './modules'
 
+import { PrismaClient } from '@prisma/client'
+export const prisma = new PrismaClient()
+
 import createLogPlugin from './plugins/logs'
 import winston, { format } from 'winston'
 import { SERVICE_NAME } from './configs'
@@ -28,6 +31,7 @@ const logger = winston.createLogger({
 export type Context = {
   req: any
   logger: winston.Logger
+  prisma: PrismaClient
 }
 
 export default new ApolloServer({
@@ -35,7 +39,8 @@ export default new ApolloServer({
   context: ({ req }: any) => {
     return {
       req,
-      logger
+      logger,
+      prisma
     }
   },
   plugins: [

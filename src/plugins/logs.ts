@@ -1,6 +1,5 @@
 import { ApolloServerPlugin } from 'apollo-server-plugin-base'
 import { Logger } from 'winston'
-import { typeFromAST } from 'graphql'
 
 const createPlugin = (logger: Logger): ApolloServerPlugin => {
   return {
