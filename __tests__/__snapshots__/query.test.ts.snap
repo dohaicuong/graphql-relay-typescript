@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetch a single post 1`] = `
+Object {
+  "data": Object {
+    "post": Object {
+      "content": "dkm too",
+      "id": "1",
+      "title": "dkm",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

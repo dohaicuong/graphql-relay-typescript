@@ -34,7 +34,7 @@ export type Context = {
   prisma: PrismaClient
 }
 
-export default new ApolloServer({
+export const options = {
   schema,
   context: ({ req }: any) => {
     return {
@@ -46,4 +46,6 @@ export default new ApolloServer({
   plugins: [
     createLogPlugin(logger)
   ]
-})
+}
+
+export default new ApolloServer(options)
