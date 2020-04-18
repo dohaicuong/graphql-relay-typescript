@@ -26,7 +26,7 @@ jobs:
     #     echo "Default pump version as patch"
     #     npm version patch -m "Upgrade to %s"
     #     git push && git push --tags
-    -name: If version unchanged, exit
+    - name: If version unchanged, exit
       if: steps.check.outputs.changed != 'true'
       run: |
         echo "No version change :/"
