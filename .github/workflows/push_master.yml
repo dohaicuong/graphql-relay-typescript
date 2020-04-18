@@ -24,8 +24,7 @@ jobs:
 
     - name: Continue on version changed
       if: steps.check.outputs.changed == 'true'
-      run: |
-        'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+      run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
     - uses: mr-smithers-excellent/docker-build-push@v3
       name: Build & push Docker image
       with:
