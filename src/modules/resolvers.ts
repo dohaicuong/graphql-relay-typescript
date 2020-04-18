@@ -1,3 +1,5 @@
+import { connectionFromPromisedArray } from 'graphql-relay'
+
 import {
   QueryResolvers,
   MutationResolvers,
@@ -16,6 +18,12 @@ const resolvers: Resolvers = {
   Query: {
     post: (_, { id }, { prisma, logger }) => {
       return prisma.post.findOne({ where: { id }})
+    },
+    posts: async (_, args, { prisma }) => {
+      return connectionFromPromisedArray(
+        prisma.post.findMany(),
+        args
+      )
     }
   },
   Mutation: {

@@ -1,8 +1,43 @@
 import { gql } from 'apollo-server'
 
 export default gql`
+  interface Node { id: ID! }
+  type PageInfo {
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    startCursor: String
+    endCursor: String
+  }
+
+  type Post implements Node {
+    id: ID!
+    title: String
+    content: String
+
+    comments: [Comment!]
+  }
+
+  type Comment implements Node {
+    id: ID!
+    content: String
+  }
+
   type Query {
     post(id: ID!): Post
+    posts(
+      first: Int!
+      after: String
+    ): PostConnection
+  }
+
+  type PostConnection {
+    edges: [PostEdge!]
+    pageInfo: PageInfo!
+  }
+
+  type PostEdge {
+    cursor: String
+    node: Post
   }
 
   type Mutation {
@@ -15,18 +50,5 @@ export default gql`
   }
   type PostCreatePayload {
     post: Post
-  }
-
-  type Post {
-    id: ID!
-    title: String
-    content: String
-
-    comments: [Comment!]
-  }
-
-  type Comment {
-    id: ID!
-    content: String
   }
 `
