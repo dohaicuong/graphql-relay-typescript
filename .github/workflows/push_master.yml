@@ -5,14 +5,6 @@ on:
       - ci
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-    - name: setup git config
-      run: |
-        git config --global user.name ${GITHUB_ACTOR}
-        git config --global user.email ${GITHUB_ACTOR}@gmail.com
-
   test:
     runs-on: ubuntu-latest
     steps:
@@ -26,6 +18,8 @@ jobs:
     - name: Exit on version unchanged
       if: steps.check.outputs.changed != 'true'
       run: |
+        git config --global user.name ${GITHUB_ACTOR}
+        git config --global user.email ${GITHUB_ACTOR}@gmail.com
         echo "No version change :/"
         echo "Default pump version as patch"
         npm version patch
