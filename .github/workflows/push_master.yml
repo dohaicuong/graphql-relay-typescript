@@ -67,3 +67,5 @@ jobs:
       uses: EndBug/version-check@v1
     - name: Print out version
       run: 'echo "New version: ${{ steps.version.outputs.version }}"'
+    - name: grab version with bash script
+      run: cat package.json | grep version | cut -d':' -f 2 | cut -d'"' -f 2
