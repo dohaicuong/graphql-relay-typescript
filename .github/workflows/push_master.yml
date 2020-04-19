@@ -1,8 +1,7 @@
 on:
   push:
     branches:
-      # - master
-      - ci
+      - master
 
 jobs:
   check_build_publish:
@@ -19,53 +18,38 @@ jobs:
     - name: Check if version has been updated
       id: check
       uses: EndBug/version-check@v1
-    # - name: If version unchanged, treat as patch
+    - name: If version unchanged, exit
+      if: steps.check.outputs.changed != 'true'
+      run: |
+        echo "No version change!"
+        exit 1
+    - name: Continue on version changed
+      if: steps.check.outputs.changed == 'true'
+      run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+    - name: Install dependencies
+      run: |
+        yarn
+        yarn gen
+    - name: Test
+      run: |
+        yarn test
+        git add .
+        git commit -m "update test coverage"
+        git push
+    - uses: mr-smithers-excellent/docker-build-push@v3
+      name: Build & push Docker image
+      with:
+        image: dohaicuong/graphql-relay-ts
+        tag: ${{ steps.check.outputs.version }}
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
+# - name: If version unchanged, treat as patch
     #   if: steps.check.outputs.changed != 'true'
     #   run: |
     #     echo "No version change :/"
     #     echo "Default pump version as patch"
     #     npm version patch -m "Upgrade to %s"
     #     git push && git push --tags
-    - name: If version unchanged, exit
-      if: steps.check.outputs.changed != 'true'
-      run: |
-        echo "No version change!"
-        echo "Default pump version as patch"
-        npm version patch -m "Upgrade to %s"
-        git push && git push --tags
-      # exit 1
-    - name: Continue on version changed
-      if: steps.check.outputs.changed == 'true'
-      run: 'echo "Version change found in commit ${{ steps.check.outputs.commit }}! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
-    # - name: Install dependencies
-    #   run: |
-    #     yarn
-    #     yarn gen
-    # - name: Test
-    #   run: |
-    #     yarn test
-    #     git add .
-    #     git commit -m "update test coverage"
-    #     git push
-    # - uses: mr-smithers-excellent/docker-build-push@v3
-    #   name: Build & push Docker image
-    #   with:
-    #     image: dohaicuong/graphql-relay-ts
-    #     tag: ${{ steps.check.outputs.version }}
-    #     registry: docker.io
-    #     dockerfile: Dockerfile
-    #     username: ${{ secrets.REGISTRY_USERNAME }}
-    #     password: ${{ secrets.REGISTRY_PASSWORD }}
-
-  test_version:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-    - name: Check if version has been updated
-      id: version
-      uses: EndBug/version-check@v1
-    - name: Print out version
-      run: 'echo "New version: ${{ steps.version.outputs.version }}"'
-    - name: grab version with bash script
-      run: cat package.json | grep version | cut -d':' -f 2 | cut -d'"' -f 2
