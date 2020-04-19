@@ -6,6 +6,7 @@
 - Typescript, graphql-code-gen
 - Jest, apollo-server-testing
 - Winston (logging) with apollo plugin
+- Github actions for test, update test coverage then build and publish Docker image
 
 ## Getting start
 
