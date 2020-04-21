@@ -23,7 +23,7 @@ export default gql`
   }
 
   type Query {
-    post(id: ID!): Post
+    node(id: ID!): Node
     posts(
       first: Int!
       after: String

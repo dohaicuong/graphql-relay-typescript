@@ -5,5 +5,6 @@ import resolvers from './resolvers'
 
 export default makeExecutableSchema({
   typeDefs,
-  resolvers: resolvers as any
+  resolvers: resolvers as any,
+  inheritResolversFromInterfaces: true,
 })

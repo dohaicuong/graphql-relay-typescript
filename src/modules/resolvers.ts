@@ -4,10 +4,12 @@ import {
   QueryResolvers,
   MutationResolvers,
   PostResolvers,
-  CommentResolvers
+  CommentResolvers,
+  NodeResolvers,
 } from 'gen-types'
 
 type Resolvers = {
+  Node: NodeResolvers
   Query: QueryResolvers
   Mutation?: MutationResolvers
   Post?: PostResolvers
@@ -15,9 +17,18 @@ type Resolvers = {
 }
 
 const resolvers: Resolvers = {
+  Node: {
+    // @ts-ignore
+    __resolveType: node => node.type,
+    id: (node, __, ___, info) => `${info.parentType}_${node.id}`,
+  },
   Query: {
-    post: (_, { id }, { prisma, logger }) => {
-      return prisma.post.findOne({ where: { id }})
+    node: async (_, { id: typeId }, { prisma }) => {
+      const [type, id] = typeId.split('_')
+      // @ts-ignore
+      const node = await prisma[type.toLowerCase()].findOne({ where: { id }})
+
+      return { type, ...node }
     },
     posts: async (_, args, { prisma }) => {
       return connectionFromPromisedArray(
